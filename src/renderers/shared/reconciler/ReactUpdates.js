@@ -220,7 +220,7 @@ flushBatchedUpdates = ReactPerf.measure(
   将组件标记为需要重新渲染，将可选回调添加到将在重新渲染发生后执行的函数列表。
  */
 function enqueueUpdate(component) {
-  ensureInjected(); //判断是否有调度事务方法 同时 有批量更新策略 batchingStrategy ？
+  ensureInjected(); //环境判断：是否有调度事务方法同时有批量更新策略方法 batchingStrategy ？
 
   // Various parts of our code (such as ReactCompositeComponent's
   // _renderValidatedComponent) assume that calls to render aren't nested;
@@ -229,7 +229,7 @@ function enqueueUpdate(component) {
   // destruction of top-level components is guarded in ReactMount.)
 
   //关键的判断条件 ，是否是批量更新
-  // isBatchingUpdates这个值谁来维护呢？
+  //可是isBatchingUpdates这个值谁来维护呢？
   if (!batchingStrategy.isBatchingUpdates) {        // 如果不在批量更新策略中
     // 如果不是批量更新，猜想一下，应该会立即更新吧？
     // batchingStrategy到底在做什么呢

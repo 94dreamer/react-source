@@ -28,6 +28,7 @@ function ReactComponent(props, context, updater) {
   this.refs = emptyObject;
   // We initialize the default updater but the real one gets injected by the
   // renderer.
+  // updater有默认值，真实运行时会注入，其实也算依赖注入
   this.updater = updater || ReactNoopUpdateQueue;
 }
 
@@ -76,12 +77,11 @@ ReactComponent.prototype.setState = function(partialState, callback) {
       'instead, use forceUpdate().'
     );
   }
+  // 忽略掉入参验证和开发抛错
   /** 
    * 调用setState实际是调用了enqueueSetState
-   * 
+   * 调用队列的入队方法，把当前组件的示例和state存进入
   */
- 
-  // 调用队列的入队方法，把当前组件的示例和state存进入
   this.updater.enqueueSetState(this, partialState);
   if (callback) {
     // 如果有回调，把回调存进setState队列的后置钩子

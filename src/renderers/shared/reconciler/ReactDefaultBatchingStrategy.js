@@ -50,7 +50,10 @@ var transaction = new ReactDefaultBatchingStrategyTransaction();
 
 var ReactDefaultBatchingStrategy = {
   isBatchingUpdates: false,   
+  // 这个就是我们心心念念判断是否在批量更新策略的重要变量。  
   // 谁在维护它？batchedUpdates  
+  // 这个isBatchingUpdates变量搜索整个项目，发现它只被两处改变，
+  // 一处ReactDefaultBatchingStrategy对象自身的另一个方法赋值改变，那就是batchedUpdates。
   //batchedUpdates 被谁调用  ReactMount.js ReactEventListener.js
 
   /**
@@ -61,7 +64,7 @@ var ReactDefaultBatchingStrategy = {
     var alreadyBatchingUpdates = ReactDefaultBatchingStrategy.isBatchingUpdates;
 
     ReactDefaultBatchingStrategy.isBatchingUpdates = true;
-    // 调用一次就编程批量更新了
+    // 标识着开启批量更新策略
 
     // The code is written this way to avoid extra allocations
     // 第一次进来是false,调用事务
